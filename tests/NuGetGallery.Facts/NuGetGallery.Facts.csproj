@@ -396,9 +396,11 @@
     <Compile Include="Areas\Admin\Controllers\SecurityPolicyControllerFacts.cs" />
     <Compile Include="Areas\Admin\HelperFacts.cs" />
     <Compile Include="Areas\Admin\Services\ValidationAdminServiceFacts.cs" />
+    <Compile Include="Authentication\ApiScopeEvaluatorFacts.cs" />
     <Compile Include="Authentication\AuthenticatorFacts.cs" />
     <Compile Include="Authentication\Providers\ApiKey\ApiKeyAuthenticationHandlerFacts.cs" />
     <Compile Include="Authentication\AuthenticationServiceFacts.cs" />
+    <Compile Include="Authentication\ScopeSubjectConverterFacts.cs" />
     <Compile Include="Authentication\TestCredentialHelper.cs" />
     <Compile Include="Controllers\SupportControllerFacts.cs" />
     <Compile Include="Extensions\RouteExtensionsFacts.cs" />
@@ -434,6 +436,7 @@
     <Compile Include="Helpers\HtmlExtensionsFacts.cs" />
     <Compile Include="HttpContextBaseExtensionsFacts.cs" />
     <Compile Include="Infrastructure\Authentication\Base32EncoderTests.cs" />
+    <Compile Include="Infrastructure\TestableApiScopeEvaluator.cs" />
     <Compile Include="Security\RequireMinProtocolVersionForPushPolicyFacts.cs" />
     <Compile Include="Services\ActionRequiringEntityPermissionsFacts.cs" />
     <Compile Include="Services\DeleteAccountServiceFacts.cs" />
@@ -469,6 +472,8 @@
     <Compile Include="Services\SearchAdaptorFacts.cs" />
     <Compile Include="Services\SupportRequestServiceFacts.cs" />
     <Compile Include="Services\TelemetryServiceFacts.cs" />
+    <Compile Include="Services\TestableActionRequiringEntityPermissions.cs" />
+    <Compile Include="Services\TestablePermissionsEntity.cs" />
     <Compile Include="Services\ValidationServiceFacts.cs" />
     <Compile Include="Telemetry\ClientInformationTelemetryEnricherTests.cs" />
     <Compile Include="Telemetry\ClientTelemetryPIIProcessorTests.cs" />
