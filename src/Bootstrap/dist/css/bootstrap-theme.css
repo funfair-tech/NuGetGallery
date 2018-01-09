@@ -1247,4 +1247,13 @@ img.reserved-indicator-icon {
 .page-upload #browse-for-package-button {
   margin: 0;
 }
+.page-manage-organizations .organizations-list .item {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  background-color: #f2f2f2;
+}
+.page-manage-organizations .organizations-list .details {
+  margin-bottom: 5px;
+}
 /*# sourceMappingURL=bootstrap-theme.css.map */
