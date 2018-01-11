@@ -21,13 +21,13 @@
                 {
                     <a href="@Url.ManageMyOrganizations()">
                         <div class="row item">
-                            <div class="col-sm-1 hidden-xs hidden-sm">
+                            <div class="col-sm-1 hidden-xs hidden-sm icon">
                                 @ViewHelpers.GravatarImage(organization.EmailAddress, organization.Username, 332, responsive: true)
                             </div>
 
                             <div class="col-sm-11">
                                 <div class="row">
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-6">
                                         <p class="details">
                                             <b>@organization.Username</b>
                                         </p>
@@ -40,6 +40,9 @@
                                         <p class="details">
                                             <b>@organization.MemberCount members</b>
                                         </p>
+                                    </div>
+
+                                    <div class="col-sm-3">
                                         <p class="details">
                                             <i>@organization.PackagesCount packages</i>
                                         </p>
