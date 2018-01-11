@@ -42,8 +42,10 @@ namespace NuGetGallery
             await _initiator.StartValidationAsync(package);
         }
 
-        public IEnumerable<ValidationIssue> GetLatestValidationIssues(Package package)
+        public IReadOnlyList<ValidationIssue> GetLatestValidationIssues(Package package)
         {
+            var issues = Enumerable.Empty<ValidationIssue>();
+
             // Only query the database for validation issues if the package has failed validation.
             if (package.PackageStatusKey == PackageStatus.FailedValidation)
             {
@@ -62,16 +64,26 @@ namespace NuGetGallery
                 {
                     // Get the failed validation set's validation issues. The issues are ordered by their
                     // key so that it appears that issues are appended as more validations fail.
-                    return validationSet
-                                .PackageValidations
-                                .SelectMany(v => v.PackageValidationIssues)
-                                .OrderBy(i => i.Key)
-                                .Select(i => ValidationIssue.Deserialize(i.IssueCode, i.Data))
-                                .ToList();
+                    issues = validationSet
+                        .PackageValidations
+                        .SelectMany(v => v.PackageValidationIssues)
+                        .OrderBy(i => i.Key)
+                        .Select(i => ValidationIssue.Deserialize(i.IssueCode, i.Data))
+                        .ToList();
+                }
+
+                // If the package failed validation, use the generic error message.
+                if (issues == null || !issues.Any())
+                {
+                    issues = new[] { new UnknownIssue() };
                 }
             }
 
-            return Enumerable.Empty<ValidationIssue>();
+            // Filter out unknown issues and deduplicate the issues by code and data.
+            return issues
+                .GroupBy(x => new { x.IssueCode, Data = x.Serialize() })
+                .Select(x => x.First())
+                .ToList();
         }
     }
 }
