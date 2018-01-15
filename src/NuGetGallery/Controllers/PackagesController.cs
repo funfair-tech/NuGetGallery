@@ -508,6 +508,8 @@ namespace NuGetGallery
             return View(model);
         }
 
+
+        [Authorize]
         public virtual async Task<ActionResult> ListPackages(PackageListSearchViewModel searchAndListModel)
         {
             var page = searchAndListModel.Page;
