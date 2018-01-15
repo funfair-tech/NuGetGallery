@@ -399,6 +399,7 @@ namespace NuGetGallery
             return Json(model);
         }
 
+        [Authorize]
         public virtual async Task<ActionResult> DisplayPackage(string id, string version)
         {
             string normalized = NuGetVersionFormatter.Normalize(version);
