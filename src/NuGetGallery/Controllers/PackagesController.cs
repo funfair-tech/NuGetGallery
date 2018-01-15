@@ -400,6 +400,7 @@ namespace NuGetGallery
         }
 
         [Authorize]
+        [RequiresAccountConfirmation("display package details")]
         public virtual async Task<ActionResult> DisplayPackage(string id, string version)
         {
             string normalized = NuGetVersionFormatter.Normalize(version);
@@ -511,6 +512,7 @@ namespace NuGetGallery
 
 
         [Authorize]
+        [RequiresAccountConfirmation("display package details")]
         public virtual async Task<ActionResult> ListPackages(PackageListSearchViewModel searchAndListModel)
         {
             var page = searchAndListModel.Page;
