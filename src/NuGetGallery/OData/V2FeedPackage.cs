@@ -8,7 +8,7 @@ namespace NuGetGallery.OData
 {
     [HasStream]
     [DataServiceKey("Id", "Version")]
-    [EntityPropertyMapping("Id", SyndicationItemProperty.Title, SyndicationTextContentKind.Plaintext, keepInContent: false)]
+    [EntityPropertyMapping("Title", SyndicationItemProperty.Title, SyndicationTextContentKind.Plaintext, keepInContent: false)]
     [EntityPropertyMapping("Authors", SyndicationItemProperty.AuthorName, SyndicationTextContentKind.Plaintext, keepInContent: false)]
     [EntityPropertyMapping("LastUpdated", SyndicationItemProperty.Updated, SyndicationTextContentKind.Plaintext, keepInContent: false)]
     [EntityPropertyMapping("Summary", SyndicationItemProperty.Summary, SyndicationTextContentKind.Plaintext, keepInContent: false)]
@@ -41,7 +41,7 @@ namespace NuGetGallery.OData
         public bool RequireLicenseAcceptance { get; set; }
         public string Summary { get; set; }
         public string Tags { get; set; }
-        public string Title { get; set; }
+        public string Title { get; set; }        
         public int VersionDownloadCount { get; set; }
         public string MinClientVersion { get; set; }
         public DateTime? LastEdited { get; set; }

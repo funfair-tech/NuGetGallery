@@ -30,7 +30,7 @@ namespace NuGetGallery.OData.Serializers
 
             // Set Atom entry metadata
             var atomEntryMetadata = new AtomEntryMetadata();
-            atomEntryMetadata.Title = feedPackage.Id;
+            atomEntryMetadata.Title = feedPackage.Title;
 
             if (!string.IsNullOrEmpty(feedPackage.Authors))
             {

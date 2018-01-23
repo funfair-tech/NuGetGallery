@@ -63,7 +63,7 @@ namespace NuGetGallery.OData.Serializers
 
             var expectedAtomEntryMetadataAnnotation = new AtomEntryMetadata()
             {
-                Title = v2FeedPackage.Id,
+                Title = v2FeedPackage.Title,
                 Authors = new[] { new AtomPersonMetadata { Name = v2FeedPackage.Authors } },
                 Updated = v2FeedPackage.LastUpdated,
                 Summary = v2FeedPackage.Summary
