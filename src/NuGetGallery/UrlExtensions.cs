@@ -22,7 +22,7 @@ namespace NuGetGallery
         // Shorthand for current url
         public static string Current(this UrlHelper url)
         {
-            return url.RequestContext.HttpContext.Request.RawUrl;
+            return MakeSecure(url.RequestContext.HttpContext.Request.RawUrl);
         }
 
         public static string Absolute(this UrlHelper url, string path)
@@ -30,18 +30,15 @@ namespace NuGetGallery
             UriBuilder builder = GetCanonicalUrl(url);
             if (path.StartsWith("~/", StringComparison.OrdinalIgnoreCase))
             {
-                path = VirtualPathUtility.ToAbsolute(path, url.RequestContext.HttpContext.Request.ApplicationPath);
+                path = UrlExtensions.MakeSecure(VirtualPathUtility.ToAbsolute(path, url.RequestContext.HttpContext.Request.ApplicationPath));
             }
             builder.Path = path;
-            return builder.Uri.AbsoluteUri;
+            return UrlExtensions.MakeSecure(builder.Uri.AbsoluteUri);
         }
 
         private static string GetProtocol(UrlHelper url)
         {
-            if (_configuration.Current.RequireSSL || url.RequestContext.HttpContext.Request.IsSecureConnection)
-                return Uri.UriSchemeHttps;
-
-            return Uri.UriSchemeHttp;
+            return Uri.UriSchemeHttps;
         }
 
         internal static void SetConfigurationService(IGalleryConfigurationService configurationService)
@@ -241,7 +238,7 @@ namespace NuGetGallery
 
         public static string Package(this UrlHelper url, string id, bool relativeUrl = true)
         {
-            return url.Package(id, version: null, relativeUrl: relativeUrl);
+            return UrlExtensions.MakeSecure(url.Package(id, version: null, relativeUrl: relativeUrl));
         }
 
         public static string Package(
@@ -281,8 +278,8 @@ namespace NuGetGallery
 
         public static string PackageDefaultIcon(this UrlHelper url)
         {
-            return url.Home(relativeUrl: false).TrimEnd('/')
-                + VirtualPathUtility.ToAbsolute("~/Content/Images/packageDefaultIcon-50x50.png", url.RequestContext.HttpContext.Request.ApplicationPath);
+            return UrlExtensions.MakeSecure(url.Home(relativeUrl: false).TrimEnd('/')
+                + VirtualPathUtility.ToAbsolute("~/Content/Images/packageDefaultIcon-50x50.png", url.RequestContext.HttpContext.Request.ApplicationPath));
         }
 
         public static string PackageDownload(
@@ -973,7 +970,7 @@ namespace NuGetGallery
 
         private static UriBuilder GetCanonicalUrl(UrlHelper url)
         {
-            var builder = new UriBuilder(url.RequestContext.HttpContext.Request.Url);
+            var builder = new UriBuilder(MakeSecure(url.RequestContext.HttpContext.Request.Url));
             builder.Query = String.Empty;
             if (builder.Host.StartsWith("www.", StringComparison.OrdinalIgnoreCase))
             {
@@ -1025,7 +1022,7 @@ namespace NuGetGallery
 
             if (relativeUrl)
             {
-                return actionLink.Replace($"{protocol}://{hostName}", string.Empty);
+                return actionLink.Replace($"https://{hostName}", string.Empty);
             }
 
             return actionLink;
@@ -1044,7 +1041,7 @@ namespace NuGetGallery
 
             if (relativeUrl)
             {
-                return routeLink.Replace($"{protocol}://{hostName}", string.Empty);
+                return routeLink.Replace($"https://{hostName}", string.Empty);
             }
 
             return routeLink;
@@ -1063,7 +1060,7 @@ namespace NuGetGallery
             {
                 if (!returnUri.IsAbsoluteUri)
                 {
-                    var baseUri = new Uri($"{protocol}://{configuredSiteRootHostName}");
+                    var baseUri = new Uri($"https://{configuredSiteRootHostName}");
                     returnUri = new Uri(baseUri, returnUri);
                 }
 
@@ -1073,15 +1070,35 @@ namespace NuGetGallery
 
                 if (string.IsNullOrEmpty(uriBuilder.Query))
                 {
-                    return uriBuilder.ToString().TrimEnd('/');
+                    return MakeSecure(uriBuilder.ToString().TrimEnd('/'));
                 }
 
-                return uriBuilder.ToString();
+                return MakeSecure(uriBuilder.ToString());
             }
 
             // This only happens when the returnUrl did not have a valid Uri format,
             // so we can safely strip this value.
             return string.Empty;
+        }
+
+        public static string MakeSecure(string url)
+        {
+            if (url.StartsWith("http://"))
+            {
+                return "https://" + url.Substring("http://".Length);
+            }
+
+            return url;
+        }
+
+        public static Uri MakeSecure(Uri url)
+        {
+            if (url.ToString().StartsWith("http://"))
+            {
+                return new Uri("https://" + url.ToString().Substring("http://".Length));
+            }
+
+            return url;
         }
     }
 }

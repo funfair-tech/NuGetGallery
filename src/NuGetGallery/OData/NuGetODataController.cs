@@ -44,7 +44,7 @@ namespace NuGetGallery.OData
 
         protected virtual bool UseHttps()
         {
-            return Request.RequestUri.Scheme == "https";
+            return true; //Request.RequestUri.Scheme == "https";
         }
 
         protected virtual string GetSiteRoot()

@@ -103,18 +103,18 @@ namespace NuGetGallery
             // Remove X-AspNetMvc-Version header
             MvcHandler.DisableMvcResponseHeader = true;
 
-            if (config.Current.RequireSSL)
-            {
-                // Put a middleware at the top of the stack to force the user over to SSL
-                if (config.Current.ForceSslExclusion == null)
-                {
-                    app.UseForceSsl(config.Current.SSLPort);
-                }
-                else
-                {
-                    app.UseForceSsl(config.Current.SSLPort, config.Current.ForceSslExclusion);
-                }
-            }
+            //if (config.Current.RequireSSL)
+            //{
+            //    // Put a middleware at the top of the stack to force the user over to SSL
+            //    if (config.Current.ForceSslExclusion == null)
+            //    {
+            //        app.UseForceSsl(config.Current.SSLPort);
+            //    }
+            //    else
+            //    {
+            //        app.UseForceSsl(config.Current.SSLPort, config.Current.ForceSslExclusion);
+            //    }
+            //}
 
             // Get the local user auth provider, if present and attach it first
             Authenticator localUserAuthenticator;

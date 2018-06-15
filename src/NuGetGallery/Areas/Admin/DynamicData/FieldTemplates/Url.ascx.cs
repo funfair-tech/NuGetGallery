@@ -14,11 +14,16 @@ namespace NuGetGallery {
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         private string ProcessUrl(string url) {
+            if (url.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
+            {
+                url = "https://" + url.Substring("http://".Length);
+            }
+
             if (url.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || url.StartsWith("https://", StringComparison.OrdinalIgnoreCase)) {
                 return url;    
             }
     
-            return "http://" + url;
+            return "https://" + url;
         }
     
         public override Control DataControl {

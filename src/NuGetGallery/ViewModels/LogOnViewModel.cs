@@ -85,7 +85,7 @@ namespace NuGetGallery
         [StringLength(255)]
         [Display(Name = "Email")]
         [RegularExpression(EmailValidationRegex, ErrorMessage = EmailValidationErrorMessage)]
-        [Subtext("We use <a href=\"http://www.gravatar.com\" target=\"_blank\">Gravatar</a> to get your profile picture", AllowHtml = true)]
+        [Subtext("We use <a href=\"https://www.gravatar.com\" target=\"_blank\">Gravatar</a> to get your profile picture", AllowHtml = true)]
         public string EmailAddress { get; set; }
 
         [Required]

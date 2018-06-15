@@ -235,7 +235,7 @@ namespace NuGetGallery.Configuration
                 // No SiteRoot configured in settings.
                 // Fallback to detected site root.
                 var request = GetCurrentRequest();
-                siteRoot = request.Url.GetLeftPart(UriPartial.Authority) + '/';
+                siteRoot = UrlExtensions.MakeSecure(request.Url.GetLeftPart(UriPartial.Authority) + '/');
             }
 
             if (!siteRoot.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
@@ -244,24 +244,18 @@ namespace NuGetGallery.Configuration
                 throw new InvalidOperationException("The configured site root must start with either http:// or https://.");
             }
 
-            if (siteRoot.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
-            {
-                siteRoot = "http://" + siteRoot.Substring(8);
-            }
-
-            return siteRoot;
+            return UrlExtensions.MakeSecure(siteRoot);
         }
 
         private string GetHttpsSiteRoot()
         {
-            var siteRoot = _httpSiteRootThunk.Value;
-
-            if (!siteRoot.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
+            var siteRoot = UrlExtensions.MakeSecure(_httpSiteRootThunk.Value);
+            if (siteRoot.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || siteRoot.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
             {
-                throw new InvalidOperationException("The configured HTTP site root must start with http://.");
+                return siteRoot;
             }
 
-            return "https://" + siteRoot.Substring(7);
+            throw new InvalidOperationException("The configured HTTP site root must start with http:// or https://.");
         }
     }
 }

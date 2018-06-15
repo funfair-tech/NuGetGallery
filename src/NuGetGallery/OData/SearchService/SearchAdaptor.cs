@@ -102,7 +102,7 @@ namespace NuGetGallery.OData
             // We can only use Lucene if:
             //  a) The Index contains all versions of each package
             //  b) The sort order is something Lucene can handle
-            if (TryReadSearchFilter(searchService.ContainsAllVersions, request.RawUrl, searchService.ContainsAllVersions, out searchFilter) && !string.IsNullOrWhiteSpace(id))
+            if (TryReadSearchFilter(searchService.ContainsAllVersions, UrlExtensions.MakeSecure(request.RawUrl), searchService.ContainsAllVersions, out searchFilter) && !string.IsNullOrWhiteSpace(id))
             {
                 var normalizedRegistrationId = id.Normalize(NormalizationForm.FormC);
 
@@ -143,7 +143,7 @@ namespace NuGetGallery.OData
             // We can only use Lucene if:
             //  a) We are looking for the latest version of a package OR the Index contains all versions of each package
             //  b) The sort order is something Lucene can handle
-            if (TryReadSearchFilter(searchService.ContainsAllVersions, request.RawUrl, false, out searchFilter))
+            if (TryReadSearchFilter(searchService.ContainsAllVersions, UrlExtensions.MakeSecure(request.RawUrl), false, out searchFilter))
             {
                 searchFilter.SearchTerm = searchTerm;
                 searchFilter.IncludePrerelease = includePrerelease;

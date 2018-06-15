@@ -101,7 +101,7 @@ namespace NuGetGallery.OData.Serializers
                 localPath = localPath.Substring(0, queryStartIndex);
             }
 
-            return new Uri($"{request.RequestUri.Scheme}://{request.RequestUri.Host}{localPath}{packageIdentityQuery}");
+            return new Uri($"https://{request.RequestUri.Host}{localPath}{packageIdentityQuery}");
         }
     }
 }

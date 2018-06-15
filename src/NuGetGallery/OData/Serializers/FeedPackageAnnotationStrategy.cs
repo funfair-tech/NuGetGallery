@@ -37,7 +37,7 @@ namespace NuGetGallery.OData.Serializers
             var url = new UrlHelper(request);
             var result = url.Route(routePrefix + RouteName.DownloadPackage, new { id, version });
 
-            var builder = new UriBuilder(request.RequestUri);
+            var builder = new UriBuilder(UrlExtensions.MakeSecure(request.RequestUri));
             builder.Path = version == null ? EnsureTrailingSlash(result) : result;
             builder.Query = string.Empty;
 

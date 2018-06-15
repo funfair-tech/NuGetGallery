@@ -39,7 +39,7 @@ namespace NuGetGallery
             var container = await GetContainerAsync(folderName);
             var blob = container.GetBlobReference(fileName);
 
-            var redirectUri = GetRedirectUri(httpContext.Request.Url, blob.Uri);
+            var redirectUri = UrlExtensions.MakeSecure(GetRedirectUri(httpContext.Request.Url, blob.Uri));
             return new RedirectResult(redirectUri.AbsoluteUri, false);
         }
 

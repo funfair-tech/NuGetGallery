@@ -195,7 +195,7 @@ namespace NuGetGallery
             }
 
             return await PackageFileService.CreateDownloadPackageActionResultAsync(
-                HttpContext.Request.Url,
+                UrlExtensions.MakeSecure(HttpContext.Request.Url),
                 id, version);
         }
 
@@ -204,7 +204,7 @@ namespace NuGetGallery
         [OutputCache(VaryByParam = "none", Location = OutputCacheLocation.ServerAndClient, Duration = 600)]
         public virtual Task<ActionResult> GetNuGetExe()
         {
-            return NugetExeDownloaderService.CreateNuGetExeDownloadActionResultAsync(HttpContext.Request.Url);
+            return NugetExeDownloaderService.CreateNuGetExeDownloadActionResultAsync(UrlExtensions.MakeSecure(HttpContext.Request.Url));
         }
 
         [HttpGet]

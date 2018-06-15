@@ -180,10 +180,10 @@ namespace NuGetGallery.Controllers
 
                     var pagedQueryable = packages
                         .Take(options.Top != null ? Math.Min(options.Top.Value, MaxPageSize) : MaxPageSize)
-                        .ToV2FeedPackageQuery(GetSiteRoot(), _configurationService.Features.FriendlyLicenses, semVerLevelKey);
+                        .ToV2FeedPackageQuery(UrlExtensions.MakeSecure(GetSiteRoot()), _configurationService.Features.FriendlyLicenses, semVerLevelKey);
 
                     return QueryResult(options, pagedQueryable, MaxPageSize, totalHits, (o, s, resultCount) =>
-                       SearchAdaptor.GetNextLink(Request.RequestUri, resultCount, new { id }, o, s));
+                       SearchAdaptor.GetNextLink(UrlExtensions.MakeSecure(Request.RequestUri), resultCount, new { id }, o, s));
                 }
             }
             catch (Exception ex)
@@ -199,7 +199,7 @@ namespace NuGetGallery.Controllers
             }
 
             var queryable = packages.ToV2FeedPackageQuery(
-                GetSiteRoot(), 
+                UrlExtensions.MakeSecure(GetSiteRoot()), 
                 _configurationService.Features.FriendlyLicenses, 
                 semVerLevelKey);
 
@@ -295,7 +295,7 @@ namespace NuGetGallery.Controllers
                     if (o.Top == null || (resultCount.HasValue && o.Top.Value >= resultCount.Value))
                     {
                         return SearchAdaptor.GetNextLink(
-                            Request.RequestUri, 
+                            UrlExtensions.MakeSecure(Request.RequestUri), 
                             resultCount, 
                             new { searchTerm, targetFramework, includePrerelease }, 
                             o, 

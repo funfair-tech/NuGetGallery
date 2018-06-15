@@ -92,7 +92,7 @@ namespace NuGetGallery.Controllers
                                 semVerLevelKey);
 
                         return QueryResult(options, pagedQueryable, MaxPageSize, totalHits, (o, s, resultCount) =>
-                           SearchAdaptor.GetNextLink(Request.RequestUri, resultCount, null, o, s));
+                           SearchAdaptor.GetNextLink(UrlExtensions.MakeSecure(Request.RequestUri), resultCount, null, o, s));
                     }
                 }
             }
@@ -251,7 +251,7 @@ namespace NuGetGallery.Controllers
                             semVerLevelKey);
 
                     return QueryResult(options, pagedQueryable, MaxPageSize, totalHits, (o, s, resultCount) =>
-                       SearchAdaptor.GetNextLink(Request.RequestUri, resultCount, new { id }, o, s));
+                       SearchAdaptor.GetNextLink(UrlExtensions.MakeSecure(Request.RequestUri), resultCount, new { id }, o, s));
                 }
             }
             catch (Exception ex)
@@ -348,7 +348,7 @@ namespace NuGetGallery.Controllers
                 var pagedQueryable = query
                     .Take(options.Top != null ? Math.Min(options.Top.Value, MaxPageSize) : MaxPageSize)
                     .ToV2FeedPackageQuery(
-                        GetSiteRoot(), 
+                        UrlExtensions.MakeSecure(GetSiteRoot()), 
                         _configurationService.Features.FriendlyLicenses, 
                         semVerLevelKey);
 
@@ -358,7 +358,7 @@ namespace NuGetGallery.Controllers
                     // Strip it of for backward compatibility.
                     if (o.Top == null || (resultCount.HasValue && o.Top.Value >= resultCount.Value))
                     {
-                        return SearchAdaptor.GetNextLink(Request.RequestUri, resultCount, new { searchTerm, targetFramework, includePrerelease }, o, s);
+                        return SearchAdaptor.GetNextLink(UrlExtensions.MakeSecure(Request.RequestUri), resultCount, new { searchTerm, targetFramework, includePrerelease }, o, s);
                     }
                     return null;
                 });

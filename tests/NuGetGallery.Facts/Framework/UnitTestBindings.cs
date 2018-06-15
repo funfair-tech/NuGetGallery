@@ -131,7 +131,6 @@ namespace NuGetGallery.Framework
             // We configure HTTP site root, but require SSL.
             var configurationService = new TestGalleryConfigurationService();
             configurationService.Current.SiteRoot = TestUtility.GallerySiteRootHttp;
-            configurationService.Current.RequireSSL = true;
             configurationService.Current.GalleryOwner = new MailAddress("support@example.com");
 
             return configurationService;

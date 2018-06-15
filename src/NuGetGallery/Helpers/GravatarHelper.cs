@@ -7,7 +7,7 @@ namespace NuGetGallery.Helpers
 {
     public static class GravatarHelper
     {
-        private const string UnsecureGravatarUrl = "http://www.gravatar.com/";
+        private const string UnsecureGravatarUrl = "https://www.gravatar.com/";
         private const string SecureGravatarUrl = "https://secure.gravatar.com/";
 
         public static string Url(string email, int size)
@@ -42,7 +42,7 @@ namespace NuGetGallery.Helpers
 
         private static bool ShouldUseSecureGravatar()
         {
-            return (HttpContext.Current == null || HttpContext.Current.Request.IsSecureConnection);
+            return true;
         }
     }
 }

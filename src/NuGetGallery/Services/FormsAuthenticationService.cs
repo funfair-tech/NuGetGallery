@@ -43,7 +43,7 @@ namespace NuGetGallery
             var formsCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket)
             {
                 HttpOnly = true,
-                Secure = _configuration.RequireSSL
+                Secure = true
             };
             context.Response.Cookies.Add(formsCookie);
         }

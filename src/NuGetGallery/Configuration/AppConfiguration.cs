@@ -16,11 +16,11 @@ namespace NuGetGallery.Configuration
         [DefaultValue("")]
         public string WarningBanner { get; set; }
 
-        /// <summary>
-        /// Gets a setting indicating if SSL is required for all operations once logged in.
-        /// </summary>
-        [DefaultValue(false)]
-        public bool RequireSSL { get; set; }
+        ///// <summary>
+        ///// Gets a setting indicating if SSL is required for all operations once logged in.
+        ///// </summary>
+        //[DefaultValue(false)]
+        //public bool RequireSSL { get; set; }
 
         /// <summary>
         /// Gets the port used for SSL
